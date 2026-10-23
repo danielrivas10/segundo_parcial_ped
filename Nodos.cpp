@@ -37,21 +37,20 @@ void ReverseList(Node*& head)
 
     while (current != nullptr)
     {
-        // Guarda el enlace anterior original.
+        
         temp = current->prev;
 
-        // Intercambia los enlaces del nodo actual.
+        
         current->prev = current->next;
         current->next = temp;
 
-        // Avanza usando el enlace que era next antes del intercambio.
+        
         current = current->prev;
     }
 
     if (temp != nullptr)
     {
-        // El último nodo recorrido ahora es el primero.
-        head = temp->prev;
+        
     }
 }
 
@@ -67,13 +66,6 @@ void PrintForward(Node* head)
 
     std::cout << '\n';
 }
-//Parte 1.2
-void SwapAdjacentPairs(Node*& head) {
-
-
-
-
-};
 
 int main()
 {

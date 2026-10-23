@@ -1,68 +1,60 @@
-//2.2 Separar solicitudes de una cola.
+//Colas
 
 
 #include <iostream>
 #include <queue>
-/*
-void SeparateRequests(
-std::queue<int>& requests,
-std::queue<int>& priority) {}
 
-*/
-
-void RemoveValue(std::queue<int>& request)
+void SeparateRequests(std::queue<int> &requests,std::queue<int> &priority)
 {
-    std::queue<int> auxiliary;
 
-    // Sacamos todos los elementos de la cola original.
-    while (!requests.empty())
+    std::size_t original_size = requests.size();
+
+    for (std::size_t i = 0; i < original_size; ++i)
     {
-        int value = requests.front();
+        int request = requests.front();
         requests.pop();
 
-        // Guardamos únicamente los que no se deben eliminar.
-        if (value % 3==0)
+        if (request % 3 == 0)
         {
-            auxiliary.push(value);
+            priority.push(request);
+        }
+        else
+        {
+            requests.push(request);
         }
     }
-
-    // Devolvemos los conservados a la cola original.
-    while (!auxiliary.empty())
-    {
-        requests.push(auxiliary.front());
-        auxiliary.pop();
-    }
-}
-
-void PrintQueue(std::queue<int> requests)
-{
-    while (!requests.empty())
-    {
-        std::cout << requests.front() << " ";
-        requests.pop();
-    }
-    std::cout << '\n';
 }
 
 int main()
 {
     std::queue<int> requests;
-    requests.push(5);
+    std::queue<int> priority;
+
+    requests.push(4);
+    requests.push(6);
+    requests.push(9);
     requests.push(2);
-    requests.push(3);
-    requests.push(3);
+    requests.push(12);
     requests.push(5);
+    requests.push(7);
+    requests.push(3);
 
+    SeparateRequests(requests, priority);
 
-    std::cout << "Despues de separar las colas ";
-    PrintQueue(requests);
+    std::cout << "requests: ";
+    while (!requests.empty())
+    {
+        std::cout << requests.front() << ' ';
+        requests.pop();
+    }
 
+    std::cout << "\npriority: ";
+    while (!priority.empty())
+    {
+        std::cout << priority.front() << ' ';
+        priority.pop();
+    }
+
+    std::cout << '\n';
     return 0;
 }
-
-
-
-
-
-

@@ -1,23 +1,29 @@
+//Pilas.
+
 #include <iostream>
 #include <stack>
 
-void RemoveConsecutiveDuplicates(std::stack<int> &values, int target)
+void RemoveConsecutiveDuplicates(std::stack<int> &values)
 {
-    std::stack<int> auxiliary; // Crea una pila temporal vacía. Usada para guardaar numeros que no sean 20.
+    std::stack<int> auxiliary;
+    bool has_previous = false;
+    int previous = 0;
 
+    
     while (!values.empty())
     {
-        int value = values.top(); // O sea si es el valor buscado entonces lo sube
-        values.pop();             // Acá lo elimina.
+        int current = values.top();
+        values.pop();
 
-        if (value != target)
+        if (!has_previous || current != previous)
         {
-            auxiliary.push(value);
-            
+            auxiliary.push(current);
+            previous = current;
+            has_previous = true;
         }
     }
 
-    // Devolver los elementos a values para conservar su orden. Quitandolo de auxiliary.
+
     while (!auxiliary.empty())
     {
         values.push(auxiliary.top());
@@ -29,27 +35,27 @@ int main()
 {
     std::stack<int> values;
 
-    values.push(10);
-    values.push(20);
-    values.push(50);
-    values.push(20);
-    values.push(40);
-    RemoveConsecutiveDuplicates(values, 20);
+    values.push(2);
+    values.push(2);
+    values.push(7);
+    values.push(7);
+    values.push(3);
+    values.push(8);
+    values.push(8);
+    values.push(5);
+    values.push(5);
+    values.push(5);
 
+    RemoveConsecutiveDuplicates(values);
+
+    std::cout << "Resultado: ";
 
     while (!values.empty())
     {
-        std::cout << values.top();
-
+        std::cout << values.top() << ' ';
         values.pop();
-
-        if (!values.empty())
-        {
-            std::cout << ", ";
-        }
     }
 
     std::cout << '\n';
-
     return 0;
 }
